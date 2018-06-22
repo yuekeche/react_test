@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>04_component_props</title>
+</head>
+<body>
+
+<div id="example1"></div>
+<div id="example2"></div>
+<div id="example3"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/prop-types.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+
+<script type="text/babel">
+
+  /*
+需求: 自定义用来显示一个人员信息的组件, 效果如页面. 说明
+  1). 如果性别没有指定, 默认为男
+  2). 如果年龄没有指定, 默认为18
+  */
+
+  class Person extends React.Component{
+
+      render(){
+          console.log(this)
+          //取出props的数据
+          const {name,sex,age}=this.props
+          return (
+                  <ul>
+                    <li>姓名：{name}</li>
+                    <li>性别：{sex}</li>
+                    <li>年龄：{age}</li>
+                  </ul>
+          )
+      }
+  }
+
+
+  //指定属性值的类型和必要性
+  Person.propTypes={
+      name:PropTypes.string.isRequired,
+      age:PropTypes.number,
+      sex:PropTypes.string
+  }
+
+
+  //指定属性的默认值
+  Person.defaultProps={
+      age:16,
+      sex:'男'
+  }
+
+  const p={
+      name:'Tom',
+      age:19,
+      sex:'男'
+  }
+  ReactDOM.render(<Person name={p.name} age={p.age} sex={p.sex}/>,document.getElementById('example1'))
+  ReactDOM.render(<Person name='Tom' age='19'/>,document.getElementById('example2'))
+
+  const p3={
+      name:'Anne',
+      age:19,
+      sex:'女'
+  }
+ ReactDOM.render(<Person {...p3}/>,document.getElementById('example3'))
+
+</script>
+</body>
+</html>
+
